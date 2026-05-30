@@ -1,0 +1,3 @@
+node_modules/
+lspd.db*
+.env
