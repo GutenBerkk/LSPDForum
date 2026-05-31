@@ -1431,10 +1431,73 @@ async function renderAdminSettings(container) {
       <div style="background: var(--bg-card); padding: 24px; border-radius: 12px; border: 1px solid var(--border-color); max-width: 800px;">
         <form onsubmit="handleSaveSettings(event)">
           <div class="form-group">
-            <label class="form-label">Hlavní barva stránky (HEX)</label>
-            <div style="display: flex; gap: 8px;">
-              <input type="color" id="setPrimaryColor" value="${settings.primary_color || '#d4af37'}" style="height: 42px; width: 50px; border: none; cursor: pointer; background: transparent;">
-              <input type="text" class="form-input" id="setPrimaryColorText" value="${settings.primary_color || '#d4af37'}" onchange="document.getElementById('setPrimaryColor').value = this.value" style="flex:1;">
+            <label class="form-label">Základní barvy (Brand)</label>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+              <div>
+                <label style="font-size: 0.8rem; color: var(--text-secondary);">Hlavní barva (Zlatá)</label>
+                <div style="display: flex; gap: 8px;">
+                  <input type="color" id="setPrimaryColor" value="${settings.primary_color || '#c9a84c'}" oninput="document.getElementById('setPrimaryColorText').value = this.value" style="height: 42px; width: 50px; border: none; cursor: pointer; background: transparent;">
+                  <input type="text" class="form-input" id="setPrimaryColorText" value="${settings.primary_color || '#c9a84c'}" onchange="document.getElementById('setPrimaryColor').value = this.value" style="flex:1;">
+                </div>
+              </div>
+              <div>
+                <label style="font-size: 0.8rem; color: var(--text-secondary);">Barva hlavičky (Navy)</label>
+                <div style="display: flex; gap: 8px;">
+                  <input type="color" id="setNavyColor" value="${settings.navy_color || '#1a2a4a'}" oninput="document.getElementById('setNavyColorText').value = this.value" style="height: 42px; width: 50px; border: none; cursor: pointer; background: transparent;">
+                  <input type="text" class="form-input" id="setNavyColorText" value="${settings.navy_color || '#1a2a4a'}" onchange="document.getElementById('setNavyColor').value = this.value" style="flex:1;">
+                </div>
+              </div>
+              <div>
+                <label style="font-size: 0.8rem; color: var(--text-secondary);">Tmavší hlavička (Navy Deep)</label>
+                <div style="display: flex; gap: 8px;">
+                  <input type="color" id="setNavyDeepColor" value="${settings.navy_deep_color || '#0d1b2a'}" oninput="document.getElementById('setNavyDeepColorText').value = this.value" style="height: 42px; width: 50px; border: none; cursor: pointer; background: transparent;">
+                  <input type="text" class="form-input" id="setNavyDeepColorText" value="${settings.navy_deep_color || '#0d1b2a'}" onchange="document.getElementById('setNavyDeepColor').value = this.value" style="flex:1;">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Barvy pozadí</label>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+              <div>
+                <label style="font-size: 0.8rem; color: var(--text-secondary);">Hlavní pozadí</label>
+                <div style="display: flex; gap: 8px;">
+                  <input type="color" id="setBgPrimary" value="${settings.bg_primary || '#0a0f1a'}" oninput="document.getElementById('setBgPrimaryText').value = this.value" style="height: 42px; width: 50px; border: none; cursor: pointer; background: transparent;">
+                  <input type="text" class="form-input" id="setBgPrimaryText" value="${settings.bg_primary || '#0a0f1a'}" onchange="document.getElementById('setBgPrimary').value = this.value" style="flex:1;">
+                </div>
+              </div>
+              <div>
+                <label style="font-size: 0.8rem; color: var(--text-secondary);">Sekundární pozadí</label>
+                <div style="display: flex; gap: 8px;">
+                  <input type="color" id="setBgSecondary" value="${settings.bg_secondary || '#111827'}" oninput="document.getElementById('setBgSecondaryText').value = this.value" style="height: 42px; width: 50px; border: none; cursor: pointer; background: transparent;">
+                  <input type="text" class="form-input" id="setBgSecondaryText" value="${settings.bg_secondary || '#111827'}" onchange="document.getElementById('setBgSecondary').value = this.value" style="flex:1;">
+                </div>
+              </div>
+              <div>
+                <label style="font-size: 0.8rem; color: var(--text-secondary);">Pozadí karet (RGBA)</label>
+                <input type="text" class="form-input" id="setBgCardText" value="${settings.bg_card || 'rgba(255, 255, 255, 0.04)'}" style="margin-top: 4px;">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Barvy textu</label>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+              <div>
+                <label style="font-size: 0.8rem; color: var(--text-secondary);">Hlavní text</label>
+                <div style="display: flex; gap: 8px;">
+                  <input type="color" id="setTextPrimary" value="${settings.text_primary || '#f0f0f0'}" oninput="document.getElementById('setTextPrimaryText').value = this.value" style="height: 42px; width: 50px; border: none; cursor: pointer; background: transparent;">
+                  <input type="text" class="form-input" id="setTextPrimaryText" value="${settings.text_primary || '#f0f0f0'}" onchange="document.getElementById('setTextPrimary').value = this.value" style="flex:1;">
+                </div>
+              </div>
+              <div>
+                <label style="font-size: 0.8rem; color: var(--text-secondary);">Sekundární text</label>
+                <div style="display: flex; gap: 8px;">
+                  <input type="color" id="setTextSecondary" value="${settings.text_secondary || '#9ca3af'}" oninput="document.getElementById('setTextSecondaryText').value = this.value" style="height: 42px; width: 50px; border: none; cursor: pointer; background: transparent;">
+                  <input type="text" class="form-input" id="setTextSecondaryText" value="${settings.text_secondary || '#9ca3af'}" onchange="document.getElementById('setTextSecondary').value = this.value" style="flex:1;">
+                </div>
+              </div>
             </div>
           </div>
           
@@ -1474,10 +1537,6 @@ async function renderAdminSettings(container) {
       </div>
     `;
 
-    document.getElementById('setPrimaryColor').addEventListener('input', function() {
-      document.getElementById('setPrimaryColorText').value = this.value;
-    });
-
   } catch (err) {
     container.innerHTML = `<p style="color: var(--status-error);">Chyba: ${escapeHtml(err.message)}</p>`;
   }
@@ -1511,6 +1570,13 @@ async function handleSaveSettings(e) {
       method: 'PUT',
       body: {
         primary_color: document.getElementById('setPrimaryColorText').value,
+        navy_color: document.getElementById('setNavyColorText').value,
+        navy_deep_color: document.getElementById('setNavyDeepColorText').value,
+        bg_primary: document.getElementById('setBgPrimaryText').value,
+        bg_secondary: document.getElementById('setBgSecondaryText').value,
+        bg_card: document.getElementById('setBgCardText').value,
+        text_primary: document.getElementById('setTextPrimaryText').value,
+        text_secondary: document.getElementById('setTextSecondaryText').value,
         logo_url: document.getElementById('setLogoUrl').value,
         about_us_text: document.getElementById('setAboutText').value,
         hero_images: heroArr

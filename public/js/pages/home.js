@@ -111,7 +111,7 @@ function renderHomePage() {
           <div class="contact-card scroll-reveal" style="transition-delay: 0.2s;">
             <div class="contact-card-icon">📍</div>
             <h3>Adresa</h3>
-            <p>Mission Row Police Station, Los Santos</p>
+            <p>Vespucci Police Station, Los Santos</p>
           </div>
         </div>
       </div>

@@ -16,10 +16,18 @@ async function fetchSettings() {
 }
 
 function applySettings() {
+  const root = document.documentElement;
   if (globalSettings.primary_color) {
-    document.documentElement.style.setProperty('--primary', globalSettings.primary_color);
-    document.documentElement.style.setProperty('--gold', globalSettings.primary_color); // If they use --gold
+    root.style.setProperty('--primary', globalSettings.primary_color);
+    root.style.setProperty('--gold', globalSettings.primary_color); 
   }
+  if (globalSettings.navy_color) root.style.setProperty('--navy', globalSettings.navy_color);
+  if (globalSettings.navy_deep_color) root.style.setProperty('--navy-deep', globalSettings.navy_deep_color);
+  if (globalSettings.bg_primary) root.style.setProperty('--bg-primary', globalSettings.bg_primary);
+  if (globalSettings.bg_secondary) root.style.setProperty('--bg-secondary', globalSettings.bg_secondary);
+  if (globalSettings.bg_card) root.style.setProperty('--bg-card', globalSettings.bg_card);
+  if (globalSettings.text_primary) root.style.setProperty('--text-primary', globalSettings.text_primary);
+  if (globalSettings.text_secondary) root.style.setProperty('--text-secondary', globalSettings.text_secondary);
   
   if (globalSettings.logo_url) {
     document.querySelectorAll('img[src="/img/logo.png"]').forEach(img => {
