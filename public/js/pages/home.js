@@ -3,11 +3,15 @@
    ============================================ */
 
 function renderHomePage() {
+  const images = globalSettings.hero_images || ['/img/hero-bg.png'];
+  const firstImage = images[0] || '/img/hero-bg.png';
+  const aboutText = textToParagraphs(globalSettings.about_us_text || 'LSPD je hlavní policejní složkou...');
+
   return `
     <!-- Hero -->
     <section class="hero">
       <div class="hero-bg">
-        <img src="/img/hero-bg.png" alt="LSPD Patrol" id="heroImage">
+        <img src="${firstImage}" alt="LSPD Patrol" id="heroImage" data-images='${JSON.stringify(images).replace(/'/g, "&#39;")}'>
         <div class="hero-bg-overlay"></div>
       </div>
       <img src="/img/logo.png" alt="" class="hero-logo-float">
@@ -60,25 +64,12 @@ function renderHomePage() {
         <div class="about-grid">
           <div class="scroll-reveal">
             <h2>Los Santos Police Department</h2>
-            <p>
-              LSPD je hlavní policejní složkou města Los Santos. Naší misí je chránit 
-              životy a majetek občanů, udržovat veřejný pořádek a prosazovat zákon 
-              s integritou a profesionalitou.
-            </p>
-            <p>
-              Od svého založení se LSPD řídí hodnotami cti, odvahy a oddanosti službě 
-              veřejnosti. Naši příslušníci procházejí náročným výcvikem a jsou připraveni 
-              reagovat na jakoukoliv situaci.
-            </p>
-            <ul class="about-list">
-              <li><span class="about-list-dot"></span> Ochrana veřejného pořádku</li>
-              <li><span class="about-list-dot"></span> Vyšetřování trestné činnosti</li>
-              <li><span class="about-list-dot"></span> Dopravní bezpečnost</li>
-              <li><span class="about-list-dot"></span> Služba komunitě</li>
-            </ul>
+            <div id="aboutUsContent">
+              ${aboutText}
+            </div>
           </div>
           <div class="about-image scroll-reveal" style="transition-delay: 0.2s;">
-            <img src="/img/hero-bg.png" alt="LSPD v akci">
+            <img src="${firstImage}" alt="LSPD v akci">
           </div>
         </div>
       </div>
@@ -157,15 +148,39 @@ async function initHomePage() {
   initScrollReveal();
   initCounters();
 
-  // Parallax
+  // Parallax & Carousel
   const heroImg = document.getElementById('heroImage');
   if (heroImg) {
+    heroImg.style.transition = 'opacity 0.5s ease';
+    try {
+      const images = JSON.parse(heroImg.dataset.images || '[]');
+      if (images.length > 1) {
+        let currentIdx = 0;
+        // Set an interval for carousel
+        window._heroCarouselInterval = setInterval(() => {
+          if (!document.getElementById('heroImage')) {
+            clearInterval(window._heroCarouselInterval);
+            return;
+          }
+          heroImg.style.opacity = '0';
+          setTimeout(() => {
+            currentIdx = (currentIdx + 1) % images.length;
+            heroImg.src = images[currentIdx];
+            heroImg.style.opacity = '1';
+          }, 500);
+        }, 5000);
+      }
+    } catch (e) {
+      console.error('Error parsing hero images', e);
+    }
+
     let ticking = false;
     window.addEventListener('scroll', () => {
       if (!ticking) {
         requestAnimationFrame(() => {
           const scrolled = window.pageYOffset;
-          if (heroImg) heroImg.style.transform = `translateY(${scrolled * 0.4}px)`;
+          const el = document.getElementById('heroImage');
+          if (el) el.style.transform = `translateY(${scrolled * 0.4}px)`;
           ticking = false;
         });
         ticking = true;

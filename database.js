@@ -76,6 +76,27 @@ async function initializeDatabase() {
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
 
+    CREATE TABLE IF NOT EXISTS complaints (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER,
+      name TEXT NOT NULL,
+      email TEXT,
+      subject TEXT NOT NULL,
+      message TEXT NOT NULL,
+      status TEXT DEFAULT 'pending',
+      admin_note TEXT,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (user_id) REFERENCES users(id)
+    );
+
+    CREATE TABLE IF NOT EXISTS divisions (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      description TEXT,
+      photo TEXT,
+      sort_order INTEGER DEFAULT 0
+    );
+
     CREATE TABLE IF NOT EXISTS settings (
       key TEXT PRIMARY KEY,
       value TEXT
@@ -153,6 +174,35 @@ async function initializeDatabase() {
       );
     }
     console.log('✅ Default posts seeded');
+  }
+
+  // Seed default settings
+  const settingsCount = await db.get('SELECT COUNT(*) as count FROM settings');
+  if (settingsCount.count === 0) {
+    const defaultSettings = [
+      { key: 'primary_color', value: '#d4af37' },
+      { key: 'logo_url', value: '/img/logo.png' },
+      { key: 'hero_images', value: JSON.stringify(['/img/hero-bg.png']) },
+      { key: 'about_us_text', value: 'LSPD je hlavní policejní složkou města Los Santos. Naší misí je chránit životy a majetek občanů, udržovat veřejný pořádek a prosazovat zákon s integritou a profesionalitou.\n\nOd svého založení se LSPD řídí hodnotami cti, odvahy a oddanosti službě veřejnosti. Naši příslušníci procházejí náročným výcvikem a jsou připraveni reagovat na jakoukoliv situaci.' }
+    ];
+
+    for (const s of defaultSettings) {
+      await db.run('INSERT INTO settings (key, value) VALUES (?, ?)', [s.key, s.value]);
+    }
+    console.log('✅ Default settings seeded');
+  }
+
+  // Seed default divisions
+  const divisionsCount = await db.get('SELECT COUNT(*) as count FROM divisions');
+  if (divisionsCount.count === 0) {
+    const defaultDivisions = [
+      { name: 'Patrol Division', description: 'Základní pilíř LSPD. Zajišťuje hlídkovou činnost, bezpečnost na silnicích a první kontakt s občany při krizových situacích.', sort_order: 1 },
+      { name: 'Traffic Division', description: 'Specializovaná divize zaměřující se na plynulost a bezpečnost dopravy, vyšetřování dopravních nehod a pronásledování vozidel.', sort_order: 2 }
+    ];
+    for (const d of defaultDivisions) {
+      await db.run('INSERT INTO divisions (name, description, sort_order) VALUES (?, ?, ?)', [d.name, d.description, d.sort_order]);
+    }
+    console.log('✅ Default divisions seeded');
   }
 
   console.log('✅ Database initialized successfully');

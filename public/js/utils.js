@@ -4,6 +4,30 @@
 
 const API_BASE = '/api';
 
+let globalSettings = {};
+
+async function fetchSettings() {
+  try {
+    globalSettings = await api('/settings');
+    applySettings();
+  } catch (e) {
+    console.error('Error fetching settings', e);
+  }
+}
+
+function applySettings() {
+  if (globalSettings.primary_color) {
+    document.documentElement.style.setProperty('--primary', globalSettings.primary_color);
+    document.documentElement.style.setProperty('--gold', globalSettings.primary_color); // If they use --gold
+  }
+  
+  if (globalSettings.logo_url) {
+    document.querySelectorAll('img[src="/img/logo.png"]').forEach(img => {
+      img.src = globalSettings.logo_url;
+    });
+  }
+}
+
 // API helper
 async function api(endpoint, options = {}) {
   const token = localStorage.getItem('lspd_token');

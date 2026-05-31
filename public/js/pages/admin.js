@@ -48,6 +48,15 @@ function renderAdminPage() {
           <button class="admin-nav-item" data-tab="messages" onclick="switchAdminTab('messages')">
             📧 Zprávy
           </button>
+          <button class="admin-nav-item" data-tab="complaints" onclick="switchAdminTab('complaints')">
+            ⚖️ Stížnosti
+          </button>
+          <button class="admin-nav-item" data-tab="divisions" onclick="switchAdminTab('divisions')">
+            🏢 Divize
+          </button>
+          <button class="admin-nav-item" data-tab="settings" onclick="switchAdminTab('settings')">
+            ⚙️ Nastavení
+          </button>
         </aside>
 
         <div class="admin-content" id="adminContent">
@@ -84,6 +93,9 @@ async function switchAdminTab(tab) {
     case 'leadership': await renderAdminLeadership(content); break;
     case 'users': await renderAdminUsers(content); break;
     case 'messages': await renderAdminMessages(content); break;
+    case 'complaints': await renderAdminComplaints(content); break;
+    case 'divisions': await renderAdminDivisions(content); break;
+    case 'settings': await renderAdminSettings(content); break;
   }
 }
 
@@ -1091,6 +1103,427 @@ async function deleteMessage(id) {
     await api(`/contact/${id}`, { method: 'DELETE' });
     showNotification('Zpráva smazána.', 'success');
     await renderAdminMessages(document.getElementById('adminContent'));
+  } catch (err) {
+    showNotification(err.message, 'error');
+  }
+}
+
+// ===== COMPLAINTS =====
+async function renderAdminComplaints(container) {
+  try {
+    const complaints = await api('/complaints');
+
+    container.innerHTML = `
+      <div class="admin-content-header">
+        <h2 class="admin-content-title">Stížnosti</h2>
+      </div>
+      ${complaints.length > 0 ? `
+        <div class="admin-table-wrapper">
+          <table class="admin-table">
+            <thead>
+              <tr><th>Od</th><th>Předmět</th><th>Datum</th><th>Status</th><th>Akce</th></tr>
+            </thead>
+            <tbody>
+              ${complaints.map(c => `
+                <tr>
+                  <td>
+                    <strong>${escapeHtml(c.name)}</strong><br>
+                    <small style="color: var(--text-tertiary);">${escapeHtml(c.email || '')}</small>
+                  </td>
+                  <td>${escapeHtml(c.subject)}</td>
+                  <td>${formatDate(c.created_at)}</td>
+                  <td><span class="badge badge-${c.status}">${c.status === 'pending' ? 'Čeká' : c.status === 'resolved' ? 'Vyřešeno' : 'Zamítnuto'}</span></td>
+                  <td>
+                    <button class="btn btn-sm btn-ghost" onclick="viewComplaint(${c.id})">👁️ Zobrazit</button>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      ` : `
+        <div class="empty-state">
+          <div class="empty-state-icon">⚖️</div>
+          <h3>Žádné stížnosti</h3>
+        </div>
+      `}
+    `;
+  } catch (err) {
+    container.innerHTML = `<p style="color: var(--status-error);">Chyba: ${escapeHtml(err.message)}</p>`;
+  }
+}
+
+async function viewComplaint(id) {
+  try {
+    const complaints = await api('/complaints');
+    const c = complaints.find(comp => comp.id === id);
+    if (!c) return;
+
+    const modal = document.createElement('div');
+    modal.className = 'modal-overlay';
+    modal.id = 'complaintModal';
+    modal.innerHTML = `
+      <div class="modal modal-lg">
+        <div class="modal-header">
+          <h2 class="modal-title">Stížnost: ${escapeHtml(c.subject)}</h2>
+          <button class="modal-close" onclick="document.getElementById('complaintModal').remove(); document.body.style.overflow='';">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div style="margin-bottom: 16px;">
+            <p><strong>Od:</strong> ${escapeHtml(c.name)} (${escapeHtml(c.email || 'Bez emailu')})</p>
+            <p><strong>Datum:</strong> ${formatDateTime(c.created_at)}</p>
+            <p><strong>Status:</strong> <span class="badge badge-${c.status}">${c.status === 'pending' ? 'Čeká' : c.status === 'resolved' ? 'Vyřešeno' : 'Zamítnuto'}</span></p>
+          </div>
+          <div style="background: var(--bg-card); padding: 16px; border-radius: 8px; margin-bottom: 16px;">
+            ${textToParagraphs(c.message)}
+          </div>
+          
+          <div class="form-group mt-3">
+            <label class="form-label">Poznámka administrátora / Řešení</label>
+            <textarea class="form-textarea" id="complaintNote" style="min-height: 80px;">${escapeHtml(c.admin_note || '')}</textarea>
+          </div>
+          <div class="flex gap-2 mt-2">
+            <button class="btn btn-success" onclick="updateComplaint(${c.id}, 'resolved')" style="flex:1;">✅ Označit jako vyřešené</button>
+            <button class="btn btn-danger" onclick="updateComplaint(${c.id}, 'rejected')" style="flex:1;">❌ Zamítnout stížnost</button>
+            <button class="btn btn-outline" onclick="updateComplaint(${c.id}, 'pending')" style="flex:1;">⏳ Vrátit na čekající</button>
+          </div>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+    document.body.style.overflow = 'hidden';
+    modal.addEventListener('click', e => { if (e.target === modal) { modal.remove(); document.body.style.overflow = ''; } });
+  } catch (err) {
+    showNotification(err.message, 'error');
+  }
+}
+
+async function updateComplaint(id, status) {
+  const note = document.getElementById('complaintNote')?.value || '';
+  try {
+    await api(`/complaints/${id}`, {
+      method: 'PUT',
+      body: { status, admin_note: note }
+    });
+    document.getElementById('complaintModal')?.remove();
+    document.body.style.overflow = '';
+    showNotification('Stížnost aktualizována.', 'success');
+    await renderAdminComplaints(document.getElementById('adminContent'));
+  } catch (err) {
+    showNotification(err.message, 'error');
+  }
+}
+
+// ===== DIVISIONS =====
+async function renderAdminDivisions(container) {
+  try {
+    const divisions = await api('/divisions');
+    container.innerHTML = `
+      <div class="admin-content-header">
+        <h2 class="admin-content-title">Divize LSPD</h2>
+        <button class="btn btn-gold" onclick="showCreateDivisionModal()">+ Přidat divizi</button>
+      </div>
+      ${divisions.length > 0 ? `
+        <div class="admin-table-wrapper">
+          <table class="admin-table">
+            <thead>
+              <tr><th>Fotka</th><th>Jméno</th><th>Popis</th><th>Pořadí</th><th>Akce</th></tr>
+            </thead>
+            <tbody>
+              ${divisions.map(d => `
+                <tr>
+                  <td><img src="${d.photo || '/img/logo.png'}" style="width:40px;height:40px;border-radius:8px;object-fit:cover;"></td>
+                  <td><strong>${escapeHtml(d.name)}</strong></td>
+                  <td><div style="max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(d.description || '')}</div></td>
+                  <td>${d.sort_order}</td>
+                  <td>
+                    <div class="flex gap-2">
+                      <button class="btn btn-sm btn-ghost" onclick="showEditDivisionModal(${d.id})">✏️</button>
+                      <button class="btn btn-sm btn-danger" onclick="deleteDivision(${d.id})">🗑️</button>
+                    </div>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      ` : `
+        <div class="empty-state">
+          <div class="empty-state-icon">🏢</div>
+          <h3>Žádné divize</h3>
+        </div>
+      `}
+    `;
+  } catch (err) {
+    container.innerHTML = `<p style="color: var(--status-error);">Chyba: ${escapeHtml(err.message)}</p>`;
+  }
+}
+
+function showCreateDivisionModal() {
+  const modal = document.createElement('div');
+  modal.className = 'modal-overlay';
+  modal.id = 'divisionModal';
+  modal.innerHTML = `
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title">Nová Divize</h2>
+        <button class="modal-close" onclick="document.getElementById('divisionModal').remove(); document.body.style.overflow='';">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form onsubmit="handleCreateDivision(event)">
+          <div class="form-group">
+            <label class="form-label">Název divize</label>
+            <input class="form-input" id="divName" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Popis / Info</label>
+            <textarea class="form-textarea" id="divDesc" style="min-height:80px;"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Malá fotka (ikona)</label>
+            <input type="file" accept="image/*" class="form-input" onchange="handleDivImageUpload(event, 'divPhotoUrl', 'divPhotoPreview')">
+            <input type="hidden" id="divPhotoUrl">
+            <div id="divPhotoPreview"></div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Pořadí</label>
+            <input class="form-input" type="number" id="divSort" value="0">
+          </div>
+          <button type="submit" class="btn btn-gold btn-full">Přidat</button>
+        </form>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+  document.body.style.overflow = 'hidden';
+  modal.addEventListener('click', e => { if (e.target === modal) { modal.remove(); document.body.style.overflow = ''; } });
+}
+
+async function handleDivImageUpload(e, urlId, previewId) {
+  const file = e.target.files[0];
+  if (!file) return;
+  try {
+    const data = await uploadFile(file);
+    document.getElementById(urlId).value = data.url;
+    document.getElementById(previewId).innerHTML = `<img src="${data.url}" style="width: 50px; height: 50px; border-radius: 8px; margin-top: 8px; object-fit: cover;">`;
+  } catch (err) {
+    showNotification(err.message, 'error');
+  }
+}
+
+async function handleCreateDivision(e) {
+  e.preventDefault();
+  try {
+    await api('/divisions', {
+      method: 'POST',
+      body: {
+        name: document.getElementById('divName').value.trim(),
+        description: document.getElementById('divDesc').value.trim(),
+        photo: document.getElementById('divPhotoUrl').value || undefined,
+        sort_order: parseInt(document.getElementById('divSort').value || 0)
+      }
+    });
+    document.getElementById('divisionModal')?.remove();
+    document.body.style.overflow = '';
+    showNotification('Divize přidána', 'success');
+    await renderAdminDivisions(document.getElementById('adminContent'));
+  } catch (err) {
+    showNotification(err.message, 'error');
+  }
+}
+
+async function showEditDivisionModal(id) {
+  try {
+    const divisions = await api('/divisions');
+    const d = divisions.find(div => div.id === id);
+    if (!d) return;
+
+    const modal = document.createElement('div');
+    modal.className = 'modal-overlay';
+    modal.id = 'editDivModal';
+    modal.innerHTML = `
+      <div class="modal">
+        <div class="modal-header">
+          <h2 class="modal-title">Upravit divizi</h2>
+          <button class="modal-close" onclick="document.getElementById('editDivModal').remove(); document.body.style.overflow='';">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form onsubmit="handleEditDivision(event, ${id})">
+            <div class="form-group">
+              <label class="form-label">Název divize</label>
+              <input class="form-input" id="editDivName" required value="${escapeHtml(d.name)}">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Popis / Info</label>
+              <textarea class="form-textarea" id="editDivDesc" style="min-height:80px;">${escapeHtml(d.description || '')}</textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Malá fotka (ikona)</label>
+              <input type="file" accept="image/*" class="form-input" onchange="handleDivImageUpload(event, 'editDivPhotoUrl', 'editDivPhotoPreview')">
+              <input type="hidden" id="editDivPhotoUrl" value="${d.photo || ''}">
+              <div id="editDivPhotoPreview">${d.photo ? `<img src="${d.photo}" style="width: 50px; height: 50px; border-radius: 8px; margin-top: 8px; object-fit: cover;">` : ''}</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Pořadí</label>
+              <input class="form-input" type="number" id="editDivSort" value="${d.sort_order}">
+            </div>
+            <button type="submit" class="btn btn-gold btn-full">Uložit</button>
+          </form>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+    document.body.style.overflow = 'hidden';
+    modal.addEventListener('click', e => { if (e.target === modal) { modal.remove(); document.body.style.overflow = ''; } });
+  } catch (err) {
+    showNotification(err.message, 'error');
+  }
+}
+
+async function handleEditDivision(e, id) {
+  e.preventDefault();
+  try {
+    await api(`/divisions/${id}`, {
+      method: 'PUT',
+      body: {
+        name: document.getElementById('editDivName').value.trim(),
+        description: document.getElementById('editDivDesc').value.trim(),
+        photo: document.getElementById('editDivPhotoUrl').value || undefined,
+        sort_order: parseInt(document.getElementById('editDivSort').value || 0)
+      }
+    });
+    document.getElementById('editDivModal')?.remove();
+    document.body.style.overflow = '';
+    showNotification('Divize upravena', 'success');
+    await renderAdminDivisions(document.getElementById('adminContent'));
+  } catch (err) {
+    showNotification(err.message, 'error');
+  }
+}
+
+async function deleteDivision(id) {
+  if (!confirm('Opravdu chcete smazat tuto divizi?')) return;
+  try {
+    await api(`/divisions/${id}`, { method: 'DELETE' });
+    showNotification('Divize smazána.', 'success');
+    await renderAdminDivisions(document.getElementById('adminContent'));
+  } catch (err) {
+    showNotification(err.message, 'error');
+  }
+}
+
+// ===== SETTINGS =====
+async function renderAdminSettings(container) {
+  try {
+    const settings = await api('/settings');
+    const images = settings.hero_images || [''];
+    
+    container.innerHTML = `
+      <div class="admin-content-header">
+        <h2 class="admin-content-title">Hlavní Nastavení</h2>
+      </div>
+      <div style="background: var(--bg-card); padding: 24px; border-radius: 12px; border: 1px solid var(--border-color); max-width: 800px;">
+        <form onsubmit="handleSaveSettings(event)">
+          <div class="form-group">
+            <label class="form-label">Hlavní barva stránky (HEX)</label>
+            <div style="display: flex; gap: 8px;">
+              <input type="color" id="setPrimaryColor" value="${settings.primary_color || '#d4af37'}" style="height: 42px; width: 50px; border: none; cursor: pointer; background: transparent;">
+              <input type="text" class="form-input" id="setPrimaryColorText" value="${settings.primary_color || '#d4af37'}" onchange="document.getElementById('setPrimaryColor').value = this.value" style="flex:1;">
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Logo stránky</label>
+            <div style="display:flex; gap:16px; align-items: flex-start;">
+              <div style="flex:1;">
+                <input type="file" accept="image/*" class="form-input" onchange="handleDivImageUpload(event, 'setLogoUrl', 'setLogoPreview')">
+                <input type="hidden" id="setLogoUrl" value="${settings.logo_url || ''}">
+              </div>
+              <div id="setLogoPreview" style="background: var(--bg-primary); padding: 8px; border-radius: 8px;">
+                <img src="${settings.logo_url || '/img/logo.png'}" style="height: 50px; object-fit: contain;">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Text sekce "O nás" (Domovská stránka)</label>
+            <textarea class="form-textarea" id="setAboutText" style="min-height: 150px;">${escapeHtml(settings.about_us_text || '')}</textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Fotky na domovský banner (Carousel)</label>
+            <p style="font-size: 0.8rem; color: var(--text-tertiary); margin-bottom: 8px;">Můžete nahrát více obrázků. Oddělte URL adresy čárkou, nebo nahrajte fotku a zkopírujte její odkaz.</p>
+            <input class="form-input" id="setHeroImages" value="${images.join(', ')}">
+            <div style="margin-top: 8px;">
+              <label class="btn btn-sm btn-outline" style="cursor: pointer;">
+                Nahrát fotku pro získání URL
+                <input type="file" accept="image/*" style="display:none;" onchange="handleTempImageUpload(event)">
+              </label>
+              <div id="tempImageResult" style="margin-top:4px; font-size:0.8rem; color:var(--text-secondary);"></div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-gold btn-full mt-4">Uložit nastavení</button>
+        </form>
+      </div>
+    `;
+
+    document.getElementById('setPrimaryColor').addEventListener('input', function() {
+      document.getElementById('setPrimaryColorText').value = this.value;
+    });
+
+  } catch (err) {
+    container.innerHTML = `<p style="color: var(--status-error);">Chyba: ${escapeHtml(err.message)}</p>`;
+  }
+}
+
+async function handleTempImageUpload(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  try {
+    const data = await uploadFile(file);
+    const res = document.getElementById('tempImageResult');
+    res.innerHTML = `URL: <strong>${data.url}</strong> (zkopírujte a vložte výše)`;
+    
+    // Auto-append logic
+    const input = document.getElementById('setHeroImages');
+    let current = input.value.split(',').map(s=>s.trim()).filter(Boolean);
+    current.push(data.url);
+    input.value = current.join(', ');
+  } catch (err) {
+    showNotification(err.message, 'error');
+  }
+}
+
+async function handleSaveSettings(e) {
+  e.preventDefault();
+  try {
+    const heroInput = document.getElementById('setHeroImages').value;
+    const heroArr = heroInput.split(',').map(s => s.trim()).filter(Boolean);
+
+    await api('/settings', {
+      method: 'PUT',
+      body: {
+        primary_color: document.getElementById('setPrimaryColorText').value,
+        logo_url: document.getElementById('setLogoUrl').value,
+        about_us_text: document.getElementById('setAboutText').value,
+        hero_images: heroArr
+      }
+    });
+    
+    showNotification('Nastavení uloženo. Obnovte stránku pro projevení změn.', 'success');
+    
+    // Refresh globals dynamically
+    if (typeof fetchSettings === 'function') {
+      await fetchSettings();
+      await renderAdminSettings(document.getElementById('adminContent'));
+    }
   } catch (err) {
     showNotification(err.message, 'error');
   }

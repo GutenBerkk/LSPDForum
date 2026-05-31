@@ -51,6 +51,8 @@ const routes = {
   '/press': { render: renderPressPage, init: initPressPage, title: 'Tiskové zprávy — LSPD' },
   '/contact': { render: renderContactPage, init: initContactPage, title: 'Kontakt — LSPD' },
   '/recruitment': { render: renderRecruitmentPage, init: initRecruitmentPage, title: 'Nábor — LSPD' },
+  '/complaints': { render: renderComplaintsPage, init: null, title: 'Stížnosti — LSPD' },
+  '/divisions': { render: renderDivisionsPage, init: initDivisionsPage, title: 'Divize — LSPD' },
   '/admin': { render: renderAdminPage, init: initAdminPage, title: 'Admin Panel — LSPD' },
 };
 
@@ -134,6 +136,9 @@ async function initApp() {
   // Theme
   initTheme();
   document.getElementById('themeToggle')?.addEventListener('click', toggleTheme);
+
+  // Fetch settings from DB
+  await fetchSettings();
 
   // Mobile nav
   initMobileNav();

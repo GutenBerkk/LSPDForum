@@ -23,6 +23,9 @@ app.use('/api/leadership', require('./routes/leadership'));
 app.use('/api/contact', require('./routes/contact'));
 app.use('/api/upload', require('./routes/upload'));
 app.use('/api/users', require('./routes/users'));
+app.use('/api/settings', require('./routes/settings'));
+app.use('/api/complaints', require('./routes/complaints'));
+app.use('/api/divisions', require('./routes/divisions'));
 
 // SPA fallback - serve index.html for all non-API routes
 app.get('*', (req, res) => {
