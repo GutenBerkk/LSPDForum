@@ -91,7 +91,7 @@ async function navigate() {
   currentRoute = route.path;
 
   document.title = routeConfig.title;
-  appEl.innerHTML = routeConfig.render();
+  appEl.innerHTML = await routeConfig.render();
 
   if (routeConfig.init) {
     await routeConfig.init();

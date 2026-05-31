@@ -8,25 +8,35 @@ function renderRecruitmentPage() {
     <section class="section" style="background: var(--bg-card);">
       <div class="container">
         <div class="section-header scroll-reveal">
-          <h2 class="section-title">Co nabízíme</h2>
-          <p class="section-subtitle">Výhody služby u Los Santos Police Department</p>
+          <h2 class="section-title">Co od tebe očekáváme</h2>
         </div>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px;">
-          <div class="contact-card scroll-reveal">
-            <div class="contact-card-icon">💰</div>
-            <h3>Stabilní plat</h3>
-            <p>Nadstandardní finanční ohodnocení s pravidelnými bonusy a příplatky za riziko.</p>
-          </div>
-          <div class="contact-card scroll-reveal" style="transition-delay: 0.1s;">
-            <div class="contact-card-icon">🎓</div>
-            <h3>Kariérní růst</h3>
-            <p>Možnost povýšení, přestupu do specializovaných divizí a průběžné vzdělávání.</p>
-          </div>
-          <div class="contact-card scroll-reveal" style="transition-delay: 0.2s;">
-            <div class="contact-card-icon">🛡️</div>
-            <h3>Špičkové vybavení</h3>
-            <p>Nejmodernější zbraně, vozový park a taktická výstroj pro vaši bezpečnost.</p>
-          </div>
+        <div style="max-width: 800px; margin: 0 auto; background: var(--bg-modal); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 32px;" class="scroll-reveal">
+          <ul style="list-style: none; padding: 0;">
+            <li style="margin-bottom: 16px; display: flex; align-items: flex-start; gap: 12px;">
+              <span style="color: var(--gold); font-size: 1.2rem;">✓</span>
+              <span>Minimální věk 21 let</span>
+            </li>
+            <li style="margin-bottom: 16px; display: flex; align-items: flex-start; gap: 12px;">
+              <span style="color: var(--gold); font-size: 1.2rem;">✓</span>
+              <span>Bezúhonnost — čistý trestní rejstřík</span>
+            </li>
+            <li style="margin-bottom: 16px; display: flex; align-items: flex-start; gap: 12px;">
+              <span style="color: var(--gold); font-size: 1.2rem;">✓</span>
+              <span>Platný řidičský průkaz skupiny B</span>
+            </li>
+            <li style="margin-bottom: 16px; display: flex; align-items: flex-start; gap: 12px;">
+              <span style="color: var(--gold); font-size: 1.2rem;">✓</span>
+              <span>Dobrá fyzická a psychická kondice</span>
+            </li>
+            <li style="margin-bottom: 16px; display: flex; align-items: flex-start; gap: 12px;">
+              <span style="color: var(--gold); font-size: 1.2rem;">✓</span>
+              <span>Schopnost pracovat v týmu a zvládat stresové situace</span>
+            </li>
+            <li style="display: flex; align-items: flex-start; gap: 12px;">
+              <span style="color: var(--gold); font-size: 1.2rem;">✓</span>
+              <span>Profesionální vystupování při výkonu služby i mimo ni</span>
+            </li>
+          </ul>
         </div>
       </div>
     </section>
@@ -35,30 +45,33 @@ function renderRecruitmentPage() {
     <section class="section">
       <div class="container">
         <div class="section-header scroll-reveal">
-          <h2 class="section-title">Co očekáváme</h2>
-          <p class="section-subtitle">Základní předpoklady pro přijetí</p>
+          <h2 class="section-title">Co ti nabízíme</h2>
         </div>
         <div style="max-width: 800px; margin: 0 auto; background: var(--bg-modal); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 32px;" class="scroll-reveal">
           <ul style="list-style: none; padding: 0;">
             <li style="margin-bottom: 16px; display: flex; align-items: flex-start; gap: 12px;">
-              <span style="color: var(--status-success); font-size: 1.2rem;">✓</span>
-              <span><strong>Věk:</strong> Minimálně 18 let</span>
+              <span style="color: var(--gold); font-size: 1.2rem;">✓</span>
+              <span>Jasná kariérní dráha a možnost postupu v rámci LSPD</span>
             </li>
             <li style="margin-bottom: 16px; display: flex; align-items: flex-start; gap: 12px;">
-              <span style="color: var(--status-success); font-size: 1.2rem;">✓</span>
-              <span><strong>Trestní rejstřík:</strong> Čistý trestní rejstřík (bez záznamů o felony nebo závažných misdemeanor přestupcích)</span>
+              <span style="color: var(--gold); font-size: 1.2rem;">✓</span>
+              <span>Stabilní finanční ohodnocení a odměny za kvalitní službu</span>
             </li>
             <li style="margin-bottom: 16px; display: flex; align-items: flex-start; gap: 12px;">
-              <span style="color: var(--status-success); font-size: 1.2rem;">✓</span>
-              <span><strong>Kvalifikace:</strong> Dokončené středoškolské vzdělání nebo GED</span>
+              <span style="color: var(--gold); font-size: 1.2rem;">✓</span>
+              <span>Specializace v elitních jednotkách (Air Ops, SWAT, K9 a další)</span>
             </li>
             <li style="margin-bottom: 16px; display: flex; align-items: flex-start; gap: 12px;">
-              <span style="color: var(--status-success); font-size: 1.2rem;">✓</span>
-              <span><strong>Fyzická zdatnost:</strong> Výborná fyzická i psychická kondice</span>
+              <span style="color: var(--gold); font-size: 1.2rem;">✓</span>
+              <span>Profesionální a podporující kolektiv zkušených strážníků</span>
+            </li>
+            <li style="margin-bottom: 16px; display: flex; align-items: flex-start; gap: 12px;">
+              <span style="color: var(--gold); font-size: 1.2rem;">✓</span>
+              <span>Certifikace — Rifle licence, Combat Life Saver, EVOC a další</span>
             </li>
             <li style="display: flex; align-items: flex-start; gap: 12px;">
-              <span style="color: var(--status-success); font-size: 1.2rem;">✓</span>
-              <span><strong>Osobnost:</strong> Komunikativnost, schopnost pracovat v týmu a pod tlakem, loajalita a profesionalita</span>
+              <span style="color: var(--gold); font-size: 1.2rem;">✓</span>
+              <span>Moderní vybavení a účast na taktických operacích</span>
             </li>
           </ul>
         </div>
@@ -69,41 +82,33 @@ function renderRecruitmentPage() {
     <section class="section" style="background: var(--bg-card);">
       <div class="container">
         <div class="section-header scroll-reveal">
-          <h2 class="section-title">Kroky k odznaku</h2>
-          <p class="section-subtitle">Jak probíhá přijímací řízení</p>
+          <p class="font-display text-sm font-bold uppercase tracking-[0.3em] text-[var(--gold-deep)] text-center mb-3">Náborový proces</p>
+          <h2 class="section-title">Čtyři kroky k odznaku</h2>
         </div>
-        <div style="display: flex; flex-direction: column; gap: 24px; max-width: 800px; margin: 0 auto;">
+        <div style="display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
           
-          <div class="scroll-reveal" style="display: flex; gap: 20px; align-items: flex-start; background: var(--bg-primary); padding: 24px; border-radius: var(--radius-md); border-left: 4px solid var(--gold);">
-            <div style="width: 40px; height: 40px; background: var(--gold); color: var(--navy-deep); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; font-size: 1.2rem;">1</div>
-            <div>
-              <h3 style="margin-bottom: 8px;">Odeslání elektronické přihlášky</h3>
-              <p style="color: var(--text-secondary); font-size: 0.95rem;">Vyplňte pečlivě formulář níže. Vaše přihláška bude zařazena do systému a předána k prvotnímu posouzení.</p>
-            </div>
+          <div class="scroll-reveal" style="background: var(--bg-primary); padding: 24px; border-radius: var(--radius-md); border: 1px solid var(--border-color); text-align: center;">
+            <div style="width: 50px; height: 50px; margin: 0 auto 16px auto; background: var(--gold); color: var(--navy-deep); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.5rem;">1</div>
+            <h3 style="margin-bottom: 12px; font-weight: 700; text-transform: uppercase;">Přihláška</h3>
+            <p style="color: var(--text-secondary); font-size: 0.95rem;">Vyplň registrační formulář s osobními údaji a motivací.</p>
           </div>
 
-          <div class="scroll-reveal" style="display: flex; gap: 20px; align-items: flex-start; background: var(--bg-primary); padding: 24px; border-radius: var(--radius-md); border-left: 4px solid var(--gold); transition-delay: 0.1s;">
-            <div style="width: 40px; height: 40px; background: var(--gold); color: var(--navy-deep); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; font-size: 1.2rem;">2</div>
-            <div>
-              <h3 style="margin-bottom: 8px;">Pohovor (Interview)</h3>
-              <p style="color: var(--text-secondary); font-size: 0.95rem;">Pokud projde vaše přihláška, budete pozváni na osobní pohovor, kde zhodnotíme vaše předpoklady, motivaci a znalosti.</p>
-            </div>
+          <div class="scroll-reveal" style="background: var(--bg-primary); padding: 24px; border-radius: var(--radius-md); border: 1px solid var(--border-color); text-align: center; transition-delay: 0.1s;">
+            <div style="width: 50px; height: 50px; margin: 0 auto 16px auto; background: var(--gold); color: var(--navy-deep); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.5rem;">2</div>
+            <h3 style="margin-bottom: 12px; font-weight: 700; text-transform: uppercase;">Pohovor</h3>
+            <p style="color: var(--text-secondary); font-size: 0.95rem;">Osobní pohovor s náborovým týmem a velením.</p>
           </div>
 
-          <div class="scroll-reveal" style="display: flex; gap: 20px; align-items: flex-start; background: var(--bg-primary); padding: 24px; border-radius: var(--radius-md); border-left: 4px solid var(--gold); transition-delay: 0.2s;">
-            <div style="width: 40px; height: 40px; background: var(--gold); color: var(--navy-deep); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; font-size: 1.2rem;">3</div>
-            <div>
-              <h3 style="margin-bottom: 8px;">Akademie (Police Academy)</h3>
-              <p style="color: var(--text-secondary); font-size: 0.95rem;">Po přijetí nastupujete do akademie jako Kadet. Čeká vás výcvik v zákonech, komunikaci, řízení vozidel, střelbě a taktických postupech.</p>
-            </div>
+          <div class="scroll-reveal" style="background: var(--bg-primary); padding: 24px; border-radius: var(--radius-md); border: 1px solid var(--border-color); text-align: center; transition-delay: 0.2s;">
+            <div style="width: 50px; height: 50px; margin: 0 auto 16px auto; background: var(--gold); color: var(--navy-deep); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.5rem;">3</div>
+            <h3 style="margin-bottom: 12px; font-weight: 700; text-transform: uppercase;">Akademie</h3>
+            <p style="color: var(--text-secondary); font-size: 0.95rem;">Training Division — základní výcvik a teorie.</p>
           </div>
 
-          <div class="scroll-reveal" style="display: flex; gap: 20px; align-items: flex-start; background: var(--bg-primary); padding: 24px; border-radius: var(--radius-md); border-left: 4px solid var(--gold); transition-delay: 0.3s;">
-            <div style="width: 40px; height: 40px; background: var(--gold); color: var(--navy-deep); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; font-size: 1.2rem;">4</div>
-            <div>
-              <h3 style="margin-bottom: 8px;">Fáze FTO (Field Training)</h3>
-              <p style="color: var(--text-secondary); font-size: 0.95rem;">Jako Officer I jezdíte s FTO (Field Training Officer), který dohlíží na vaši práci v terénu, dokud nebudete schopni sloužit samostatně.</p>
-            </div>
+          <div class="scroll-reveal" style="background: var(--bg-primary); padding: 24px; border-radius: var(--radius-md); border: 1px solid var(--border-color); text-align: center; transition-delay: 0.3s;">
+            <div style="width: 50px; height: 50px; margin: 0 auto 16px auto; background: var(--gold); color: var(--navy-deep); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.5rem;">4</div>
+            <h3 style="margin-bottom: 12px; font-weight: 700; text-transform: uppercase;">Field Training</h3>
+            <p style="color: var(--text-secondary); font-size: 0.95rem;">FTO program v terénu po boku zkušeného policisty.</p>
           </div>
 
         </div>
@@ -168,6 +173,7 @@ function renderRecruitmentPage() {
 }
 
 async function initRecruitmentPage() {
+  initScrollReveal();
   if (!currentUser) return;
 
   const container = document.getElementById('recruitmentContent');

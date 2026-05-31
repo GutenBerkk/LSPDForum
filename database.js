@@ -183,7 +183,7 @@ async function initializeDatabase() {
       { key: 'primary_color', value: '#d4af37' },
       { key: 'logo_url', value: '/img/logo.png' },
       { key: 'hero_images', value: JSON.stringify(['/img/hero-bg.png']) },
-      { key: 'about_us_text', value: 'LSPD je hlavní policejní složkou města Los Santos. Naší misí je chránit životy a majetek občanů, udržovat veřejný pořádek a prosazovat zákon s integritou a profesionalitou.\n\nOd svého založení se LSPD řídí hodnotami cti, odvahy a oddanosti službě veřejnosti. Naši příslušníci procházejí náročným výcvikem a jsou připraveni reagovat na jakoukoliv situaci.' }
+      { key: 'about_us_text', value: 'San Andreas Highway Patrol je elitní složkou státní policie zodpovědnou za bezpečnost na dálnicích a hlavních silničních tazích státu San Andreas. Naším posláním je chránit životy, prosazovat dopravní zákony a poskytovat pomoc všem řidičům.\n\nDisponujeme moderním vybavením, profesionálně vyškolenými troopery a širokou škálou specializovaných jednotek — od vrtulníkové podpory přes K9 jednotky až po speciální zásahové týmy. Sloužíme nepřetržitě, 24 hodin denně, 7 dní v týdnu.' }
     ];
 
     for (const s of defaultSettings) {

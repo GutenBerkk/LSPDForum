@@ -15,11 +15,27 @@ function renderComplaintsPage() {
 
       <section class="section animate-fade-in" style="animation-delay: 0.2s;">
         <div class="container" style="max-width: 800px;">
-          <div style="background: var(--bg-card); padding: 32px; border-radius: var(--radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-md);">
-            <p style="margin-bottom: 24px; color: var(--text-secondary);">
-              Všechny stížnosti jsou brány velmi vážně a jsou interně vyšetřovány vedením sboru. 
-              Prosíme o co nejpřesnější a nejdetailnější popis situace.
-            </p>
+          
+          <div style="background: var(--bg-card); padding: 32px; border-radius: var(--radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-md); margin-bottom: 32px;">
+            <div style="display: flex; gap: 16px; margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--border-color);">
+              <div style="font-size: 2rem;">⚠️</div>
+              <div>
+                <h2 style="font-size: 1.25rem; font-weight: 700; text-transform: uppercase; margin-bottom: 8px;">Než podáš stížnost</h2>
+                <p style="color: var(--text-secondary); line-height: 1.6;">Pokud máš stížnost na chování nebo jednání člena Los Santos Police Department, můžeš ji podat prostřednictvím níže uvedeného formuláře. Každý podnět bude řádně prošetřen oddělením Internal Affairs.</p>
+              </div>
+            </div>
+
+            <div style="margin-bottom: 32px;">
+              <h3 style="font-size: 1.1rem; font-weight: 700; text-transform: uppercase; margin-bottom: 12px;">Co uvést ve stížnosti</h3>
+              <ul style="list-style: none; padding: 0; color: var(--text-secondary); line-height: 1.8;">
+                <li>• Datum, čas a místo události</li>
+                <li>• Jméno nebo služební číslo policisty (pokud znáš)</li>
+                <li>• Popis incidentu — co se stalo, jak jsi byl ovlivněn</li>
+                <li>• Případní svědci a jejich kontaktní údaje</li>
+                <li>• Případné důkazy (fotografie, videa, screenshoty)</li>
+              </ul>
+              <p style="font-size: 0.85rem; color: var(--text-tertiary); margin-top: 12px;">Falešné nebo zlomyslné stížnosti mohou být postoupeny příslušným orgánům.</p>
+            </div>
 
             <form id="complaintForm" onsubmit="handleComplaintSubmit(event)">
               <div class="form-group">
