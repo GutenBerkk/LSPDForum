@@ -229,6 +229,14 @@ function showCreatePostModal() {
             <input class="form-input" id="postExcerpt" placeholder="Krátký popis pro náhled">
           </div>
           <div class="form-group">
+            <label class="form-label">Štítek</label>
+            <select class="form-select" id="postTag">
+              <option value="Informace">Informace</option>
+              <option value="Oznámení">Oznámení</option>
+              <option value="Události">Události</option>
+            </select>
+          </div>
+          <div class="form-group">
             <label class="form-label">Obsah</label>
             <textarea class="form-textarea" id="postContent" required placeholder="Obsah zprávy..." style="min-height: 200px;"></textarea>
           </div>
@@ -273,6 +281,7 @@ async function handleCreatePost(e) {
         title: document.getElementById('postTitle').value.trim(),
         content: document.getElementById('postContent').value.trim(),
         excerpt: document.getElementById('postExcerpt').value.trim() || undefined,
+        tag: document.getElementById('postTag').value,
         image: document.getElementById('postImageUrl').value || undefined,
       },
     });
@@ -312,6 +321,14 @@ async function showEditPostModal(id) {
             <div class="form-group">
               <label class="form-label">Krátký popis</label>
               <input class="form-input" id="editPostExcerpt" value="${escapeHtml(post.excerpt || '')}">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Štítek</label>
+              <select class="form-select" id="editPostTag">
+                <option value="Informace" ${post.tag === 'Informace' ? 'selected' : ''}>Informace</option>
+                <option value="Oznámení" ${post.tag === 'Oznámení' ? 'selected' : ''}>Oznámení</option>
+                <option value="Události" ${post.tag === 'Události' ? 'selected' : ''}>Události</option>
+              </select>
             </div>
             <div class="form-group">
               <label class="form-label">Obsah</label>
@@ -361,6 +378,7 @@ async function handleEditPost(e, id) {
         title: document.getElementById('editPostTitle').value.trim(),
         content: document.getElementById('editPostContent').value.trim(),
         excerpt: document.getElementById('editPostExcerpt').value.trim() || undefined,
+        tag: document.getElementById('editPostTag').value,
         image: document.getElementById('editPostImageUrl').value || null,
       },
     });

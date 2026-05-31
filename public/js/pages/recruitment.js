@@ -8,33 +8,41 @@ function renderRecruitmentPage() {
     <section class="section" style="background: var(--bg-card);">
       <div class="container">
         <div class="section-header scroll-reveal">
-          <h2 class="section-title">Co od tebe očekáváme</h2>
+          <h2 class="section-title">POŽADAVKY A VÝBĚR</h2>
         </div>
         <div style="max-width: 800px; margin: 0 auto; background: var(--bg-modal); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 32px;" class="scroll-reveal">
           <ul style="list-style: none; padding: 0;">
             <li style="margin-bottom: 16px; display: flex; align-items: flex-start; gap: 12px;">
               <span style="color: var(--gold); font-size: 1.2rem;">✓</span>
-              <span>Minimální věk 21 let</span>
+              <span>Věk minimálně 21 let</span>
             </li>
             <li style="margin-bottom: 16px; display: flex; align-items: flex-start; gap: 12px;">
               <span style="color: var(--gold); font-size: 1.2rem;">✓</span>
-              <span>Bezúhonnost — čistý trestní rejstřík</span>
+              <span>GED nebo vyšší vzdělání</span>
             </li>
             <li style="margin-bottom: 16px; display: flex; align-items: flex-start; gap: 12px;">
               <span style="color: var(--gold); font-size: 1.2rem;">✓</span>
-              <span>Platný řidičský průkaz skupiny B</span>
+              <span>Čistý trestní rejstřík</span>
             </li>
             <li style="margin-bottom: 16px; display: flex; align-items: flex-start; gap: 12px;">
               <span style="color: var(--gold); font-size: 1.2rem;">✓</span>
-              <span>Dobrá fyzická a psychická kondice</span>
+              <span>Driving License</span>
             </li>
             <li style="margin-bottom: 16px; display: flex; align-items: flex-start; gap: 12px;">
               <span style="color: var(--gold); font-size: 1.2rem;">✓</span>
-              <span>Schopnost pracovat v týmu a zvládat stresové situace</span>
+              <span>Fyzická a psychická způsobilost</span>
+            </li>
+            <li style="margin-bottom: 16px; display: flex; align-items: flex-start; gap: 12px;">
+              <span style="color: var(--gold); font-size: 1.2rem;">✓</span>
+              <span>Odolnost vůči stresu, týmová spolupráce</span>
+            </li>
+            <li style="margin-bottom: 16px; display: flex; align-items: flex-start; gap: 12px;">
+              <span style="color: var(--gold); font-size: 1.2rem;">✓</span>
+              <span>Ochota sloužit ve ztížených podmínkách</span>
             </li>
             <li style="display: flex; align-items: flex-start; gap: 12px;">
               <span style="color: var(--gold); font-size: 1.2rem;">✓</span>
-              <span>Profesionální vystupování při výkonu služby i mimo ni</span>
+              <span>Úspěšné absolvování výběrového řízení a výcviku</span>
             </li>
           </ul>
         </div>
@@ -45,33 +53,37 @@ function renderRecruitmentPage() {
     <section class="section">
       <div class="container">
         <div class="section-header scroll-reveal">
-          <h2 class="section-title">Co ti nabízíme</h2>
+          <h2 class="section-title">CO NABÍZÍME</h2>
         </div>
         <div style="max-width: 800px; margin: 0 auto; background: var(--bg-modal); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 32px;" class="scroll-reveal">
           <ul style="list-style: none; padding: 0;">
             <li style="margin-bottom: 16px; display: flex; align-items: flex-start; gap: 12px;">
               <span style="color: var(--gold); font-size: 1.2rem;">✓</span>
-              <span>Jasná kariérní dráha a možnost postupu v rámci LSPD</span>
+              <span>Služba u respektované státní ozbrojené složky</span>
             </li>
             <li style="margin-bottom: 16px; display: flex; align-items: flex-start; gap: 12px;">
               <span style="color: var(--gold); font-size: 1.2rem;">✓</span>
-              <span>Stabilní finanční ohodnocení a odměny za kvalitní službu</span>
+              <span>Kariérní růst a možnost specializace</span>
             </li>
             <li style="margin-bottom: 16px; display: flex; align-items: flex-start; gap: 12px;">
               <span style="color: var(--gold); font-size: 1.2rem;">✓</span>
-              <span>Specializace v elitních jednotkách (Air Ops, SWAT, K9 a další)</span>
+              <span>Přístup k moderní technice, vozidlům a výstroji</span>
             </li>
             <li style="margin-bottom: 16px; display: flex; align-items: flex-start; gap: 12px;">
               <span style="color: var(--gold); font-size: 1.2rem;">✓</span>
-              <span>Profesionální a podporující kolektiv zkušených strážníků</span>
+              <span>Výcvik na profesionální úrovni</span>
             </li>
             <li style="margin-bottom: 16px; display: flex; align-items: flex-start; gap: 12px;">
               <span style="color: var(--gold); font-size: 1.2rem;">✓</span>
-              <span>Certifikace — Rifle licence, Combat Life Saver, EVOC a další</span>
+              <span>Stabilní podmínky a profesionální vedení</span>
+            </li>
+            <li style="margin-bottom: 16px; display: flex; align-items: flex-start; gap: 12px;">
+              <span style="color: var(--gold); font-size: 1.2rem;">✓</span>
+              <span>Možnost účasti na leteckých a taktických výcvicích</span>
             </li>
             <li style="display: flex; align-items: flex-start; gap: 12px;">
               <span style="color: var(--gold); font-size: 1.2rem;">✓</span>
-              <span>Moderní vybavení a účast na taktických operacích</span>
+              <span>Společenské uznání a prestiž</span>
             </li>
           </ul>
         </div>

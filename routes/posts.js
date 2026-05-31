@@ -34,7 +34,7 @@ router.get('/:id', async (req, res) => {
 // POST /api/posts - create post (admin only)
 router.post('/', requireAdmin, async (req, res) => {
   try {
-    const { title, content, excerpt, image } = req.body;
+    const { title, content, excerpt, image, tag } = req.body;
 
     if (!title || !content) {
       return res.status(400).json({ error: 'Titulek a obsah jsou povinné.' });
@@ -42,8 +42,8 @@ router.post('/', requireAdmin, async (req, res) => {
 
     const db = getDb();
     const result = await db.run(
-      'INSERT INTO posts (title, content, excerpt, author, image) VALUES (?, ?, ?, ?, ?)',
-      [title, content, excerpt || content.substring(0, 150) + '...', req.user.username, image || null]
+      'INSERT INTO posts (title, content, excerpt, author, image, tag) VALUES (?, ?, ?, ?, ?, ?)',
+      [title, content, excerpt || content.substring(0, 150) + '...', req.user.username, image || null, tag || 'Informace']
     );
 
     const post = await db.get('SELECT * FROM posts WHERE id = ?', result.lastID);
@@ -57,7 +57,7 @@ router.post('/', requireAdmin, async (req, res) => {
 // PUT /api/posts/:id - update post (admin only)
 router.put('/:id', requireAdmin, async (req, res) => {
   try {
-    const { title, content, excerpt, image } = req.body;
+    const { title, content, excerpt, image, tag } = req.body;
     const db = getDb();
     const post = await db.get('SELECT * FROM posts WHERE id = ?', req.params.id);
 
@@ -66,12 +66,13 @@ router.put('/:id', requireAdmin, async (req, res) => {
     }
 
     await db.run(
-      'UPDATE posts SET title = ?, content = ?, excerpt = ?, image = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
+      'UPDATE posts SET title = ?, content = ?, excerpt = ?, image = ?, tag = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
       [
         title || post.title,
         content || post.content,
         excerpt || (content ? content.substring(0, 150) + '...' : post.excerpt),
         image !== undefined ? image : post.image,
+        tag || post.tag,
         req.params.id
       ]
     );

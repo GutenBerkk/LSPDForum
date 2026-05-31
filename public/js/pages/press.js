@@ -47,7 +47,10 @@ async function initPressPage() {
       <div class="card post-card scroll-reveal" style="transition-delay: ${i * 0.08}s;" onclick="navigateToPost(${post.id})">
         ${post.image ? `<img src="${post.image}" alt="${escapeHtml(post.title)}" class="card-image">` : ''}
         <div class="card-body">
-          <span class="post-date">${formatDate(post.created_at)}</span>
+          <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 8px;">
+            <span class="badge" style="background: var(--gold); color: var(--navy-deep);">${escapeHtml(post.tag || 'Informace')}</span>
+            <span class="post-date" style="margin: 0;">${formatDate(post.created_at)}</span>
+          </div>
           <h3 class="card-title">${escapeHtml(post.title)}</h3>
           <p class="card-text">${escapeHtml(post.excerpt || post.content.substring(0, 150) + '...')}</p>
           <div class="card-meta">
@@ -105,6 +108,7 @@ async function initPostDetailPage(id) {
       ${post.image ? `<img src="${post.image}" alt="${escapeHtml(post.title)}" class="post-detail-image">` : ''}
       <h1 class="post-detail-title">${escapeHtml(post.title)}</h1>
       <div class="post-detail-meta">
+        <span class="badge" style="background: var(--gold); color: var(--navy-deep);">${escapeHtml(post.tag || 'Informace')}</span>
         <span>📅 ${formatDate(post.created_at)}</span>
         <span>✍️ ${escapeHtml(post.author)}</span>
       </div>

@@ -34,6 +34,7 @@ async function initializeDatabase() {
       excerpt TEXT,
       author TEXT NOT NULL,
       image TEXT,
+      tag TEXT DEFAULT 'Informace',
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
