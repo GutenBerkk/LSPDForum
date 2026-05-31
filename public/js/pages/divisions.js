@@ -27,8 +27,8 @@ async function renderDivisionsPage() {
       content = `
         <div class="empty-state scroll-reveal" style="margin-top: 40px;">
           <div class="empty-state-icon" style="font-size: 3rem; margin-bottom: 16px;">🏢</div>
-          <h3>Žádné divize k zobrazení</h3>
-          <p>Momentálně zde nejsou žádné divize LSPD.</p>
+          <h3>Žádná oddělení k zobrazení</h3>
+          <p>Momentálně zde nejsou žádná oddělení LSPD.</p>
         </div>
       `;
     }
@@ -45,8 +45,8 @@ async function renderDivisionsPage() {
       <section class="page-header" style="background-image: url('${globalSettings.hero_images?.[0] || '/img/hero-bg.png'}');">
         <div class="page-header-overlay"></div>
         <div class="container relative z-10 text-center animate-fade-in-up">
-          <h1 class="page-title">Divize LSPD</h1>
-          <p class="page-subtitle">Seznamte se s jednotlivými divizemi našeho oddělení a jejich specializacemi.</p>
+          <h1 class="page-title">Oddělení LSPD</h1>
+          <p class="page-subtitle">Seznamte se s jednotlivými odděleními a jejich specializacemi.</p>
         </div>
       </section>
 

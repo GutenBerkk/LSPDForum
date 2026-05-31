@@ -52,7 +52,7 @@ const routes = {
   '/contact': { render: renderContactPage, init: initContactPage, title: 'Kontakt — LSPD' },
   '/recruitment': { render: renderRecruitmentPage, init: initRecruitmentPage, title: 'Nábor — LSPD' },
   '/complaints': { render: renderComplaintsPage, init: null, title: 'Stížnosti — LSPD' },
-  '/divisions': { render: renderDivisionsPage, init: initDivisionsPage, title: 'Divize — LSPD' },
+  '/divisions': { render: renderDivisionsPage, init: initDivisionsPage, title: 'Oddělení — LSPD' },
   '/admin': { render: renderAdminPage, init: initAdminPage, title: 'Admin Panel — LSPD' },
 };
 

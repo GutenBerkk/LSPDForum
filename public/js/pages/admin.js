@@ -52,7 +52,7 @@ function renderAdminPage() {
             ⚖️ Stížnosti
           </button>
           <button class="admin-nav-item" data-tab="divisions" onclick="switchAdminTab('divisions')">
-            🏢 Divize
+            🏢 Oddělení
           </button>
           <button class="admin-nav-item" data-tab="settings" onclick="switchAdminTab('settings')">
             ⚙️ Nastavení
@@ -1240,7 +1240,7 @@ async function renderAdminDivisions(container) {
     const divisions = await api('/divisions');
     container.innerHTML = `
       <div class="admin-content-header">
-        <h2 class="admin-content-title">Divize LSPD</h2>
+        <h2 class="admin-content-title">Oddělení LSPD</h2>
         <button class="btn btn-gold" onclick="showCreateDivisionModal()">+ Přidat divizi</button>
       </div>
       ${divisions.length > 0 ? `
@@ -1270,7 +1270,7 @@ async function renderAdminDivisions(container) {
       ` : `
         <div class="empty-state">
           <div class="empty-state-icon">🏢</div>
-          <h3>Žádné divize</h3>
+          <h3>Žádná oddělení</h3>
         </div>
       `}
     `;
@@ -1286,7 +1286,7 @@ function showCreateDivisionModal() {
   modal.innerHTML = `
     <div class="modal">
       <div class="modal-header">
-        <h2 class="modal-title">Nová Divize</h2>
+        <h2 class="modal-title">Nové oddělení</h2>
         <button class="modal-close" onclick="document.getElementById('divisionModal').remove(); document.body.style.overflow='';">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
@@ -1294,7 +1294,7 @@ function showCreateDivisionModal() {
       <div class="modal-body">
         <form onsubmit="handleCreateDivision(event)">
           <div class="form-group">
-            <label class="form-label">Název divize</label>
+            <label class="form-label">Název oddělení</label>
             <input class="form-input" id="divName" required>
           </div>
           <div class="form-group">
@@ -1347,7 +1347,7 @@ async function handleCreateDivision(e) {
     });
     document.getElementById('divisionModal')?.remove();
     document.body.style.overflow = '';
-    showNotification('Divize přidána', 'success');
+    showNotification('Oddělení přidáno', 'success');
     await renderAdminDivisions(document.getElementById('adminContent'));
   } catch (err) {
     showNotification(err.message, 'error');
@@ -1374,7 +1374,7 @@ async function showEditDivisionModal(id) {
         <div class="modal-body">
           <form onsubmit="handleEditDivision(event, ${id})">
             <div class="form-group">
-              <label class="form-label">Název divize</label>
+              <label class="form-label">Název oddělení</label>
               <input class="form-input" id="editDivName" required value="${escapeHtml(d.name)}">
             </div>
             <div class="form-group">
@@ -1418,7 +1418,7 @@ async function handleEditDivision(e, id) {
     });
     document.getElementById('editDivModal')?.remove();
     document.body.style.overflow = '';
-    showNotification('Divize upravena', 'success');
+    showNotification('Oddělení upraveno', 'success');
     await renderAdminDivisions(document.getElementById('adminContent'));
   } catch (err) {
     showNotification(err.message, 'error');
@@ -1429,7 +1429,7 @@ async function deleteDivision(id) {
   if (!confirm('Opravdu chcete smazat tuto divizi?')) return;
   try {
     await api(`/divisions/${id}`, { method: 'DELETE' });
-    showNotification('Divize smazána.', 'success');
+    showNotification('Oddělení smazáno.', 'success');
     await renderAdminDivisions(document.getElementById('adminContent'));
   } catch (err) {
     showNotification(err.message, 'error');

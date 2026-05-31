@@ -21,7 +21,7 @@ router.post('/', requireAdmin, async (req, res) => {
     const { name, description, photo, sort_order } = req.body;
     
     if (!name) {
-      return res.status(400).json({ error: 'Název divize je povinný.' });
+      return res.status(400).json({ error: 'Název oddělení je povinný.' });
     }
 
     const db = getDb();
@@ -30,7 +30,7 @@ router.post('/', requireAdmin, async (req, res) => {
       [name, description || null, photo || null, sort_order || 0]
     );
 
-    res.status(201).json({ id: result.lastID, message: 'Divize byla přidána.' });
+    res.status(201).json({ id: result.lastID, message: 'Oddělení bylo přidáno.' });
   } catch (error) {
     console.error('Error creating division:', error);
     res.status(500).json({ error: 'Chyba serveru.' });
@@ -44,7 +44,7 @@ router.put('/:id', requireAdmin, async (req, res) => {
     const db = getDb();
 
     if (!name) {
-      return res.status(400).json({ error: 'Název divize je povinný.' });
+      return res.status(400).json({ error: 'Název oddělení je povinný.' });
     }
 
     const result = await db.run(
@@ -53,10 +53,10 @@ router.put('/:id', requireAdmin, async (req, res) => {
     );
 
     if (result.changes === 0) {
-      return res.status(404).json({ error: 'Divize nebyla nalezena.' });
+      return res.status(404).json({ error: 'Oddělení nebylo nalezeno.' });
     }
 
-    res.json({ message: 'Divize byla aktualizována.' });
+    res.json({ message: 'Oddělení bylo aktualizováno.' });
   } catch (error) {
     console.error('Error updating division:', error);
     res.status(500).json({ error: 'Chyba serveru.' });
@@ -70,10 +70,10 @@ router.delete('/:id', requireAdmin, async (req, res) => {
     const result = await db.run('DELETE FROM divisions WHERE id = ?', [req.params.id]);
     
     if (result.changes === 0) {
-      return res.status(404).json({ error: 'Divize nebyla nalezena.' });
+      return res.status(404).json({ error: 'Oddělení nebylo nalezeno.' });
     }
 
-    res.json({ message: 'Divize byla smazána.' });
+    res.json({ message: 'Oddělení bylo smazáno.' });
   } catch (error) {
     console.error('Error deleting division:', error);
     res.status(500).json({ error: 'Chyba serveru.' });
