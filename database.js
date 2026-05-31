@@ -184,7 +184,7 @@ async function initializeDatabase() {
       { key: 'primary_color', value: '#d4af37' },
       { key: 'logo_url', value: '/img/logo.png' },
       { key: 'hero_images', value: JSON.stringify(['/img/hero-bg.png']) },
-      { key: 'about_us_text', value: 'San Andreas Highway Patrol je elitní složkou státní policie zodpovědnou za bezpečnost na dálnicích a hlavních silničních tazích státu San Andreas. Naším posláním je chránit životy, prosazovat dopravní zákony a poskytovat pomoc všem řidičům.\n\nDisponujeme moderním vybavením, profesionálně vyškolenými troopery a širokou škálou specializovaných jednotek — od vrtulníkové podpory přes K9 jednotky až po speciální zásahové týmy. Sloužíme nepřetržitě, 24 hodin denně, 7 dní v týdnu.' }
+      { key: 'about_us_text', value: 'LSPD je policejní sbor města Los Santos. Slouží a chrání občany města již od roku 1907. Sbor se řídí heslem "fidelitas et verum"  věrnost a pravda.\n\nZákladna je na Vespucci, odkud koordinuje hlídky po celém městě. Sbor disponuje vlastním letectvem, detektivními skupinami, elitními taktickými jednotkami i výcvikovými programy pro nové rekruty.' }
     ];
 
     for (const s of defaultSettings) {
@@ -197,8 +197,20 @@ async function initializeDatabase() {
   const divisionsCount = await db.get('SELECT COUNT(*) as count FROM divisions');
   if (divisionsCount.count === 0) {
     const defaultDivisions = [
-      { name: 'Patrol Division', description: 'Základní pilíř LSPD. Zajišťuje hlídkovou činnost, bezpečnost na silnicích a první kontakt s občany při krizových situacích.', sort_order: 1 },
-      { name: 'Traffic Division', description: 'Specializovaná divize zaměřující se na plynulost a bezpečnost dopravy, vyšetřování dopravních nehod a pronásledování vozidel.', sort_order: 2 }
+      { name: 'K9', description: 'Psovodi s vycvičenými psy pro sledování a zadržení. "You can run, but you can\'t hide."', sort_order: 1 },
+      { name: 'SWAT', description: 'Elitní taktická jednotka pro vysoce rizikové zásahy.', sort_order: 2 },
+      { name: 'Metropolitan Division', description: 'Specializovaná divize s těžkým vybavením. "Can Do, Will Do."', sort_order: 3 },
+      { name: 'Detective Services Group', description: 'Detektivní skupina vyšetřující závažnou trestnou činnost.', sort_order: 4 },
+      { name: 'Recruitment & Employment Division', description: 'Nábor a přijímání nových členů LSPD.', sort_order: 5 },
+      { name: 'Detective Training Program', description: 'Výcvik budoucích detektivů.', sort_order: 6 },
+      { name: 'Mission Row Division', description: 'Divize sídlící na hlavní stanici LSPD.', sort_order: 7 },
+      { name: 'Air Support Division', description: 'Letecká podpora z vrtulníků.', sort_order: 8 },
+      { name: 'Internal Affairs Group', description: 'Vnitřní kontrola a profesionální standardy.', sort_order: 9 },
+      { name: 'Supervisor Training Program', description: 'Výcvik pro vedoucí pracovníky.', sort_order: 10 },
+      { name: 'Field Training Program', description: 'Terénní výcvik nových policistů.', sort_order: 11 },
+      { name: 'Public Communications Division', description: 'Tisková a mediální divize, vztahy s veřejností.', sort_order: 12 },
+      { name: 'Major Crimes Division', description: 'Vyšetřování závažné a organizované trestné činnosti. "When your day ends, our day begins."', sort_order: 13 },
+      { name: 'Vespucci Gang Enforcement Detail', description: 'Speciální tým na potírání gangů v Los Santos.', sort_order: 14 }
     ];
     for (const d of defaultDivisions) {
       await db.run('INSERT INTO divisions (name, description, sort_order) VALUES (?, ?, ?)', [d.name, d.description, d.sort_order]);
