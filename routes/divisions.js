@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { getDb } = require('../database');
-const { requireAuth, requireRole } = require('../middleware/auth');
+const { requireAuth, requireAdmin } = require('../middleware/auth');
 
 // GET all divisions (public)
 router.get('/', async (req, res) => {
@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
 });
 
 // POST new division (admin only)
-router.post('/', requireAuth, requireRole('admin'), async (req, res) => {
+router.post('/', requireAdmin, async (req, res) => {
   try {
     const { name, description, photo, sort_order } = req.body;
     
@@ -38,7 +38,7 @@ router.post('/', requireAuth, requireRole('admin'), async (req, res) => {
 });
 
 // PUT update division (admin only)
-router.put('/:id', requireAuth, requireRole('admin'), async (req, res) => {
+router.put('/:id', requireAdmin, async (req, res) => {
   try {
     const { name, description, photo, sort_order } = req.body;
     const db = getDb();
@@ -64,7 +64,7 @@ router.put('/:id', requireAuth, requireRole('admin'), async (req, res) => {
 });
 
 // DELETE division (admin only)
-router.delete('/:id', requireAuth, requireRole('admin'), async (req, res) => {
+router.delete('/:id', requireAdmin, async (req, res) => {
   try {
     const db = getDb();
     const result = await db.run('DELETE FROM divisions WHERE id = ?', [req.params.id]);

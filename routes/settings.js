@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { getDb } = require('../database');
-const { requireAuth, requireRole } = require('../middleware/auth');
+const { requireAuth, requireAdmin } = require('../middleware/auth');
 
 // GET all settings (public)
 router.get('/', async (req, res) => {
@@ -25,7 +25,7 @@ router.get('/', async (req, res) => {
 });
 
 // PUT update settings (admin only)
-router.put('/', requireAuth, requireRole('admin'), async (req, res) => {
+router.put('/', requireAdmin, async (req, res) => {
   try {
     const db = getDb();
     const updates = req.body; // Expects object: { primary_color: '#...', logo_url: '...' }

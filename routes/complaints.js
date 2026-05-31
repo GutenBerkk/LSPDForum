@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const { getDb } = require('../database');
-const { requireAuth, requireRole, optionalAuth } = require('../middleware/auth');
+const { requireAuth, requireAdmin, optionalAuth } = require('../middleware/auth');
 
 // GET all complaints (admin only)
-router.get('/', requireAuth, requireRole('admin'), async (req, res) => {
+router.get('/', requireAdmin, async (req, res) => {
   try {
     const db = getDb();
     const complaints = await db.all('SELECT * FROM complaints ORDER BY created_at DESC');
@@ -43,7 +43,7 @@ router.post('/', optionalAuth, async (req, res) => {
 });
 
 // PUT update complaint status/note (admin only)
-router.put('/:id', requireAuth, requireRole('admin'), async (req, res) => {
+router.put('/:id', requireAdmin, async (req, res) => {
   try {
     const { status, admin_note } = req.body;
     const db = getDb();
